@@ -31,7 +31,7 @@ transporter.use("compile", hbs(handlebarOptions));
 
 app.use(
   cors({
-    origin: "http://localhost:3000" || process.env.CLIENT_ORIGIN,
+    origin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
     credentials: true,
   })
 );
@@ -98,7 +98,7 @@ app.post("/api/orderEmail", (req, res) => {
   res.send("order email sent");
 });
 
-const port = 4000 || process.env.PORT;
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`server started at port ${port}`);
 });
