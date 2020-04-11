@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send("server");
+  res.send("Hello Node + GitHub! This code push has auto-deployed!");
 });
 
 app.get("/api/contactForm", (req, res) => {
