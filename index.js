@@ -8,15 +8,10 @@ require("dotenv").config();
 const app = express();
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.qq.com",
-  port: 465,
-  secure: true,
+  service: "gmail",
   auth: {
-    user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-  tls: {
-    rejectUnauthorized: false,
+    user: EMAIL_USERNAME,
+    pass: EMAIL_PASSWORD,
   },
 });
 
@@ -56,7 +51,7 @@ app.get("/api/contactForm", (req, res) => {
 app.post("/api/contactForm", (req, res) => {
   const data = req.body;
   var mailOptions = {
-    from: `${process.env.EMAIL_USERNAME}@qq.com`,
+    from: process.env.EMAIL_USERNAME,
     to: process.env.CONTACT_FORM_SEND_TO,
     cc: process.env.CONTACT_FORM_CC,
     subject: "You've got a contact request from TacticalFBA",
