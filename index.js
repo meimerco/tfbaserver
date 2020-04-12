@@ -9,14 +9,15 @@ const app = express();
 
 const transporter = nodemailer.createTransport({
   host: "smtp.qq.com",
-  secureConnection: true,
-  port: 587,
+  port: 465,
   secure: true,
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
   },
-  tls: { rejectUnauthorized: false },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 const handlebarOptions = {
