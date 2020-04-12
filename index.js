@@ -8,7 +8,7 @@ require("dotenv").config();
 const app = express();
 
 const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVER,
+  service: "qq",
   port: 465,
   auth: {
     user: process.env.EMAIL_USERNAME,
