@@ -8,8 +8,9 @@ require("dotenv").config();
 const app = express();
 
 const transporter = nodemailer.createTransport({
-  service: "qq",
+  host: "smtp.qq.com",
   port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
