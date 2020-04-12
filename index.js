@@ -54,7 +54,7 @@ app.get("/api/contactForm", (req, res) => {
 app.post("/api/contactForm", (req, res) => {
   const data = req.body;
   var mailOptions = {
-    from: `${process.env.EMAIL_USERNAME}.com`,
+    from: `${process.env.EMAIL_USERNAME}@qq.com`,
     to: process.env.CONTACT_FORM_SEND_TO,
     cc: process.env.CONTACT_FORM_CC,
     subject: "You've got a contact request from TacticalFBA",
