@@ -31,7 +31,7 @@ transporter.use("compile", hbs(handlebarOptions));
 
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN,
+    origin: "https://tacticalfba.netlify.com/",
     credentials: true,
   })
 );
