@@ -31,7 +31,7 @@ transporter.use("compile", hbs(handlebarOptions));
 
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
+    origin: process.env.CLIENT_ORIGIN,
     credentials: true,
   })
 );
@@ -51,13 +51,11 @@ app.get("/api/contactForm", (req, res) => {
 
 app.post("/api/contactForm", (req, res) => {
   const data = req.body;
-  // const html = `<div>Name: ${data.name}</div><div>Email:  ${data.email}</div><div>Subject: ${data.subject}</div><div><p>Message:</p> ${data.message}</div>`;
   var mailOptions = {
     from: process.env.EMAIL_USERNAME,
     to: process.env.CONTACT_FORM_SEND_TO,
     cc: process.env.CONTACT_FORM_CC,
     subject: "You've got a contact request from TacticalFBA",
-    // html: html,
     template: "contactformreply",
     context: { data },
   };
