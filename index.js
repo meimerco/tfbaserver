@@ -10,7 +10,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const app = express();
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 app.use(bodyParser.json());
@@ -61,7 +61,7 @@ app.post("/api/contactForm", (req, res) => {
   //   }
   // });
 
-  console.log(req);
+  console.log(req.body);
   res.sendStatus(200);
 
   // const msg = {
