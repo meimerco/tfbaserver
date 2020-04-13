@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+res.header("Content-Type", "application/json; charset=utf-8");
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const handlebarOptions = {
