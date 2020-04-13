@@ -9,20 +9,10 @@ const sgMail = require("@sendgrid/mail");
 const app = express();
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 app.use(bodyParser.json());
-
-app.all("*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-  res.header("X-Powered-By", " 3.2.1");
-  res.header("Content-Type", "application/json;charset=utf-8");
-  next();
-  console.log(123);
-});
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
