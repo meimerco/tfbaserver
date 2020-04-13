@@ -60,22 +60,24 @@ app.post("/api/contactForm", (req, res) => {
   //   }
   // });
 
-  const msg = {
-    to: process.env.CONTACT_FORM_SEND_TO,
-    from: process.env.EMAIL_USERNAME,
-    cc: process.env.CONTACT_FORM_CC,
-    subject: "You've got a contact request from TacticalFBA",
-    text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage:${data.message}`,
-  };
-  sgMail
-    .send(msg)
-    .then((res) => {
-      console.log(res);
-    })
-    .then(() => {
-      res.send("contact form sent");
-    })
-    .catch((err) => console.log(err));
+  console.log(data);
+
+  // const msg = {
+  //   to: process.env.CONTACT_FORM_SEND_TO,
+  //   from: process.env.EMAIL_USERNAME,
+  //   cc: process.env.CONTACT_FORM_CC,
+  //   subject: "You've got a contact request from TacticalFBA",
+  //   text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage:${data.message}`,
+  // };
+  // sgMail
+  //   .send(msg)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .then(() => {
+  //     res.send("contact form sent");
+  //   })
+  //   .catch((err) => console.log(err));
 });
 
 app.get("/api/orderEmail", (req, res) => {
