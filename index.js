@@ -61,7 +61,8 @@ app.post("/api/contactForm", (req, res) => {
   //   }
   // });
 
-  console.log(data);
+  console.log(req);
+  res.sendStatus(200);
 
   // const msg = {
   //   to: process.env.CONTACT_FORM_SEND_TO,
