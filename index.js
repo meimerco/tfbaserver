@@ -4,16 +4,10 @@ const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 const hbs = require("nodemailer-express-handlebars");
 require("dotenv").config();
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
 
 const handlebarOptions = {
   viewEngine: {
@@ -26,16 +20,16 @@ const handlebarOptions = {
   extName: ".hbs",
 };
 
-transporter.use("compile", hbs(handlebarOptions));
+// transporter.use("compile", hbs(handlebarOptions));
 
 app.use(
   cors({
-    origin: "https://tacticalfba.netlify.com/",
+    origin: process.env.CLIENT || "http://localhost:3000",
     credentials: true,
   })
 );
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
@@ -50,22 +44,38 @@ app.get("/api/contactForm", (req, res) => {
 
 app.post("/api/contactForm", (req, res) => {
   const data = req.body;
-  var mailOptions = {
-    from: process.env.EMAIL_USERNAME,
+  // var mailOptions = {
+  //   from: process.env.EMAIL_USERNAME,
+  //   to: process.env.CONTACT_FORM_SEND_TO,
+  //   cc: process.env.CONTACT_FORM_CC,
+  //   subject: "You've got a contact request from TacticalFBA",
+  //   template: "contactformreply",
+  //   context: { data },
+  // };
+  // transporter.sendMail(mailOptions, function (error, info) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log("Email sent: " + info.response);
+  //   }
+  // });
+
+  const msg = {
     to: process.env.CONTACT_FORM_SEND_TO,
+    from: process.env.EMAIL_USERNAME,
     cc: process.env.CONTACT_FORM_CC,
     subject: "You've got a contact request from TacticalFBA",
-    template: "contactformreply",
-    context: { data },
+    text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage:${data.message}`,
   };
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
-  res.send("contact form sent");
+  sgMail
+    .send(msg)
+    .then((res) => {
+      console.log(res);
+    })
+    .then(() => {
+      res.send("contact form sent");
+    })
+    .catch((err) => console.log(err));
 });
 
 app.get("/api/orderEmail", (req, res) => {
