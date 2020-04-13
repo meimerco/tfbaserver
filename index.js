@@ -9,6 +9,12 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
 const handlebarOptions = {
   viewEngine: {
     extName: ".hbs",
@@ -28,11 +34,6 @@ app.use(
     credentials: true,
   })
 );
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
-app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send("Hello Node + GitHub! This code push has auto-deployed!");
