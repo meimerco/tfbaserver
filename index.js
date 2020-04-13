@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const hbs = require("nodemailer-express-handlebars");
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
 
@@ -14,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const handlebarOptions = {
   viewEngine: {
@@ -61,7 +62,9 @@ app.post("/api/contactForm", (req, res) => {
   //   }
   // });
 
-  console.log(req.body);
+  console.log(data);
+  console.log(1);
+
   res.sendStatus(200);
 
   // const msg = {
