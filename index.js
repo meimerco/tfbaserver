@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // const allowCrossDomain = function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
