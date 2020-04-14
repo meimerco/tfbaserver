@@ -8,6 +8,8 @@ const sgMail = require("@sendgrid/mail");
 
 const app = express();
 
+app.use(express.json());
+
 // parse application/json
 app.use(bodyParser.json());
 
