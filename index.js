@@ -14,6 +14,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+const allowCrossDomain = function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Content-Length, X-Requested-With"
+  );
+  // intercept OPTIONS method
+  if ("OPTIONS" == req.method) {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+};
+
+app.use(allowCrossDomain);
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const handlebarOptions = {
@@ -69,10 +86,13 @@ app.post("/api/contactForm", (req, res) => {
     subject: "You've got a contact request from TacticalFBA",
     text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage: ${data.message}`,
   };
+
+  console.log(msg);
+
   sgMail
     .send(msg)
     .then(() => {
-      res.sendStatus(200);
+      res.send("Email send");
     })
     .catch((err) => console.log(err));
 });
