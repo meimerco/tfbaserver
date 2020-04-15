@@ -8,37 +8,31 @@ const sgMail = require("@sendgrid/mail");
 
 const app = express();
 
-// app.use(express.json());
+app.use(
+  cors({
+    origin: "https://tacticalfba.netlify.com/",
+    credentials: true,
+  })
+);
 
-// parse application/json
-// app.use(bodyParser.json());
-
-// app.use(bodyParser.json({ type: "application/*+json" }));
-
-// parse application/x-www-form-urlencoded
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const handlebarOptions = {
-  viewEngine: {
-    extName: ".hbs",
-    partialsDir: "./views/",
-    layoutsDir: "./views/",
-    defaultLayout: "layout.hbs",
-  },
-  viewPath: "./views/",
-  extName: ".hbs",
-};
+// const handlebarOptions = {
+//   viewEngine: {
+//     extName: ".hbs",
+//     partialsDir: "./views/",
+//     layoutsDir: "./views/",
+//     defaultLayout: "layout.hbs",
+//   },
+//   viewPath: "./views/",
+//   extName: ".hbs",
+// };
 
 // transporter.use("compile", hbs(handlebarOptions));
 // ("https://tacticalfba.netlify.com/");
-app.use(
-  cors({
-    origin: "https://tacticalfba.netlify.com",
-    credentials: true,
-  })
-);
 
 app.get("/", (req, res) => {
   res.send("TacticalFBA");
@@ -66,8 +60,7 @@ app.post("/api/contactForm", (req, res) => {
   //   }
   // });
 
-  console.log(req.body);
-
+  console.log(data);
   const msg = {
     to: process.env.CONTACT_FORM_SEND_TO,
     from: process.env.EMAIL_USERNAME,
@@ -76,14 +69,12 @@ app.post("/api/contactForm", (req, res) => {
     text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage: ${data.message}`,
   };
 
-  res.send("ok");
-
-  // sgMail
-  //   .send(msg)
-  //   .then(() => {
-  //     res.send("Email send");
-  //   })
-  //   .catch((err) => console.log(err));
+  sgMail
+    .send(msg)
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => console.log(err));
 });
 
 app.get("/api/orderEmail", (req, res) => {
