@@ -8,30 +8,15 @@ const sgMail = require("@sendgrid/mail");
 
 const app = express();
 
-app.use(express.json());
+// app.use(express.json());
 
 // parse application/json
 app.use(bodyParser.json());
 
+// app.use(bodyParser.json({ type: "application/*+json" }));
+
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// const allowCrossDomain = function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type, Authorization, Content-Length, X-Requested-With"
-//   );
-//   // intercept OPTIONS method
-//   if ("OPTIONS" == req.method) {
-//     res.sendStatus(200);
-//   } else {
-//     next();
-//   }
-// };
-
-// app.use(allowCrossDomain);
+// app.use(bodyParser.urlencoded({ extended: false }));
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -47,16 +32,16 @@ const handlebarOptions = {
 };
 
 // transporter.use("compile", hbs(handlebarOptions));
-
+// ("https://tacticalfba.netlify.com/");
 app.use(
   cors({
-    origin: "https://tacticalfba.netlify.com/",
+    origin: "https://tacticalfba.netlify.com",
     credentials: true,
   })
 );
 
 app.get("/", (req, res) => {
-  res.send("Hello Node + GitHub! This code push has auto-deployed!");
+  res.send("TacticalFBA");
 });
 
 app.get("/api/contactForm", (req, res) => {
@@ -81,7 +66,7 @@ app.post("/api/contactForm", (req, res) => {
   //   }
   // });
 
-  console.log(data);
+  console.log(req.body);
 
   const msg = {
     to: process.env.CONTACT_FORM_SEND_TO,
@@ -91,12 +76,14 @@ app.post("/api/contactForm", (req, res) => {
     text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage: ${data.message}`,
   };
 
-  sgMail
-    .send(msg)
-    .then(() => {
-      res.send("Email send");
-    })
-    .catch((err) => console.log(err));
+  res.send("ok");
+
+  // sgMail
+  //   .send(msg)
+  //   .then(() => {
+  //     res.send("Email send");
+  //   })
+  //   .catch((err) => console.log(err));
 });
 
 app.get("/api/orderEmail", (req, res) => {
