@@ -61,7 +61,7 @@ app.post("/api/contactForm", (req, res) => {
   // });
 
   console.log(data);
-  res.send(dat);
+  res.send(data);
   // res.send(data); // Added this to allow request to end
   // const msg = {
   //   to: process.env.CONTACT_FORM_SEND_TO,
