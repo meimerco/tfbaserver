@@ -8,15 +8,15 @@ const sgMail = require("@sendgrid/mail");
 
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(
   cors({
-    origin: "https://tacticalfba.netlify.com/",
+    origin: new URL("https://tacticalfba.netlify.com"),
     credentials: true,
   })
 );
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -38,9 +38,9 @@ app.get("/", (req, res) => {
   res.send("TacticalFBA");
 });
 
-app.get("/api/contactForm", (req, res) => {
-  res.send("send contact form");
-});
+// app.get("/api/contactForm", (req, res) => {
+//   res.send("send contact form");
+// });
 
 app.post("/api/contactForm", (req, res) => {
   const data = req.body;
@@ -61,20 +61,21 @@ app.post("/api/contactForm", (req, res) => {
   // });
 
   console.log(data);
-  const msg = {
-    to: process.env.CONTACT_FORM_SEND_TO,
-    from: process.env.EMAIL_USERNAME,
-    // cc: process.env.CONTACT_FORM_CC,
-    subject: "You've got a contact request from TacticalFBA",
-    text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage: ${data.message}`,
-  };
+  // res.send(data); // Added this to allow request to end
+  // const msg = {
+  //   to: process.env.CONTACT_FORM_SEND_TO,
+  //   from: process.env.EMAIL_USERNAME,
+  //   // cc: process.env.CONTACT_FORM_CC,
+  //   subject: "You've got a contact request from TacticalFBA",
+  //   text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage: ${data.message}`,
+  // };
 
-  sgMail
-    .send(msg)
-    .then((response) => {
-      res.send(response);
-    })
-    .catch((err) => console.log(err));
+  // sgMail
+  //   .send(msg)
+  //   .then((response) => {
+  //     res.send(response);
+  //   })
+  //   .catch((err) => console.log(err));
 });
 
 app.get("/api/orderEmail", (req, res) => {
