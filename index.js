@@ -27,7 +27,7 @@ app.post("/api/contactForm", (req, res) => {
   console.log(data);
   const msg = {
     to: process.env.CONTACT_FORM_SEND_TO,
-    from: process.env.EMAIL_USERNAME,
+    from: { email: process.env.EMAIL_USERNAME, name: "TacticalFBA" },
     cc: process.env.CONTACT_FORM_CC,
     subject: "You've got a contact request from TacticalFBA",
     text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage: ${data.message}`,
@@ -47,7 +47,7 @@ app.post("/api/orderEmail", (req, res) => {
 
   const msg = {
     to: data.info.user,
-    from: process.env.EMAIL_USERNAME,
+    from: { email: process.env.EMAIL_USERNAME, name: "TacticalFBA" },
     template_id: "d-428e70d4b7544649b3499499ab220c06",
     dynamic_template_data: data,
   };
