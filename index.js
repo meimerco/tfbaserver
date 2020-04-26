@@ -46,7 +46,7 @@ app.post("/api/orderEmail", (req, res) => {
 
   const msg = {
     to: data.info.user,
-    from: { email: process.env.EMAIL_USERNAME, name: "TacticalFBA" },
+    from: { email: process.env.EMAIL_USERNAME_ORDER, name: "TacticalFBA" },
     template_id: "d-428e70d4b7544649b3499499ab220c06",
     dynamic_template_data: data,
   };
