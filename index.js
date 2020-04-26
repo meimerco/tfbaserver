@@ -27,8 +27,7 @@ app.post("/api/contactForm", (req, res) => {
   console.log(data);
   const msg = {
     to: process.env.CONTACT_FORM_SEND_TO,
-    from: { email: process.env.EMAIL_USERNAME, name: "TacticalFBA" },
-    cc: process.env.CONTACT_FORM_CC,
+    from: { email: process.env.EMAIL_USERNAME_SERVICE, name: "TacticalFBA" },
     subject: "You've got a contact request from TacticalFBA",
     text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${data.subject}\nMessage: ${data.message}`,
   };
