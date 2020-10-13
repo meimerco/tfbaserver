@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: new URL("https://www.tacticalfba.com/"),
+    origin: new URL("https://tfba.netlify.app/"),
     credentials: true,
   })
 );
